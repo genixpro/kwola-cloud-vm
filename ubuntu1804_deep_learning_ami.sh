@@ -5,7 +5,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 sudo apt update -y
 
-sudo apt install ffmpeg chromium-browser nodejs build-essential -y
+sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg -y
 
 wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
@@ -13,11 +13,32 @@ sudo cp chromedriver /usr/bin/
 
 python3 -m venv venv
 source venv/bin/activate
-pip3 install kwola
+pip3 install kwola --upgrade --no-cache
 
 
 sudo npm install @babel/cli -g
 sudo npm install @babel/core -g
-
 sudo npm install babel-plugin-kwola -g
+npm install babel-plugin-kwola
+
+chmod +x run_kwola.sh
+chmod +x initialize.sh
+
+git clone https://github.com/s3fs-fuse/s3fs-fuse.git
+cd s3fs-fuse
+./autogen.sh
+./configure
+make -j 16
+sudo make install
+cd ..
+sudo rm -rf s3fs-fuse
+
+
+mkdir kwola_s3_mount
+
+
+sudo cp kwola.service /etc/systemd/system/kwola.service
+sudo systemctl daemon-reload
+sudo systemctl enable kwola
+sudo systemctl daemon-reload
 
