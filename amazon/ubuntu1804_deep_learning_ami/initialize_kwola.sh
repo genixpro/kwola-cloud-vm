@@ -24,6 +24,7 @@ sleep 3
 cd kwola_s3_mount
 cp ../local_kwola_config.json .
 cp -r ../node_modules .
+source ../venv/bin/activate
 kwola_init $KWOLAURL local_kwola_config
 
 sudo systemctl restart kwola

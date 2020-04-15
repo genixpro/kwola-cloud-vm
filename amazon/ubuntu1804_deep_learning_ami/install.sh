@@ -5,11 +5,13 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 sudo apt update -y
 
-sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg -y
+sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev -y
 
 wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
 sudo cp chromedriver /usr/bin/
+rm -rf chromedriver
+rm -rf chromedriver_linux64.zip
 
 python3 -m venv venv
 source venv/bin/activate
@@ -20,9 +22,10 @@ sudo npm install @babel/cli -g
 sudo npm install @babel/core -g
 sudo npm install babel-plugin-kwola -g
 npm install babel-plugin-kwola
+rm -rf package-lock.json
 
 chmod +x run_kwola.sh
-chmod +x initialize.sh
+chmod +x initialize_kwola.sh
 
 git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 cd s3fs-fuse

@@ -1,0 +1,16 @@
+[Unit]
+Description=This service runs Kwola on a regular basis.
+After=network.target
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+
+[Service]
+ExecStart=/home/ubuntu/run_kwola.sh
+User=ubuntu
+Group=ubuntu
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
