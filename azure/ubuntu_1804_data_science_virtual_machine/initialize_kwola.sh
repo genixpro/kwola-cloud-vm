@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 echo "Please enter the credentials for your Azure Storage account where Kwola will store its data"
 
@@ -28,9 +28,11 @@ mkdir kwola_storage_mount
 sudo blobfuse kwola_storage_mount --tmp-path=/home/ubuntu/blobfusetmp  --config-file=fuse_connection.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 -o allow_other
 sleep 3
 cd kwola_storage_mount
+echo "Copying files to blob storage"
 cp ../local_kwola_config.json .
 cp -r ../node_modules .
 source ../venv/bin/activate
+echo "Initializing Kwola"
 kwola_init $KWOLAURL local_kwola_config
 rm local_kwola_config.json
 

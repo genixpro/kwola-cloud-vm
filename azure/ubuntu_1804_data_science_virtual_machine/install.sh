@@ -1,3 +1,5 @@
+#!/usr/bin/env bash -e
+
 
 CUDA_REPO_PKG=cuda-repo-ubuntu1804_10.2.89-1_amd64.deb
 wget -O /tmp/${CUDA_REPO_PKG} http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/${CUDA_REPO_PKG}
@@ -39,4 +41,11 @@ sudo cp kwola.service /etc/systemd/system/kwola.service
 sudo systemctl daemon-reload
 sudo systemctl enable kwola
 sudo systemctl daemon-reload
+
+
+echo "Installing the SSH Banner for the Server"
+sudo cp ssh_banner.txt /etc/banner
+sudo su -c 'echo "Banner /etc/banner" >> /etc/ssh/sshd_config'
+sudo systemctl restart sshd
+
 

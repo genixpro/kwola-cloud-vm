@@ -1,3 +1,4 @@
+#!/usr/bin/env bash -e
 
 
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -10,6 +11,8 @@ sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl
 wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
 sudo cp chromedriver /usr/bin/
+sudo chmod 644 /usr/bin/chromedriver
+sudo chmod +x /usr/bin/chromedriver
 rm -rf chromedriver
 rm -rf chromedriver_linux64.zip
 
@@ -44,4 +47,13 @@ sudo cp kwola.service /etc/systemd/system/kwola.service
 sudo systemctl daemon-reload
 sudo systemctl enable kwola
 sudo systemctl daemon-reload
+
+
+echo "Installing the SSH Banner for the Server"
+sudo cp ssh_banner.txt /etc/banner
+sudo su -c 'echo "Banner /etc/banner" >> /etc/ssh/sshd_config'
+sudo rm /etc/update-motd.d/00-header
+sudo rm /etc/update-motd.d/05-tfheader
+sudo rm /etc/update-motd.d/10-uname
+sudo systemctl restart sshd
 

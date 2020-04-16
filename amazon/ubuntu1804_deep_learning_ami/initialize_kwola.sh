@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
+
 
 echo "Please enter the credentials for your Amazon S3 account where Kwola will store its data"
 
@@ -22,9 +23,11 @@ mkdir kwola_s3_mount
 s3fs `cat .s3-bucket` kwola_s3_mount
 sleep 3
 cd kwola_s3_mount
+echo "Copying files into the S3 bucket"
 cp ../local_kwola_config.json .
 cp -r ../node_modules .
 source ../venv/bin/activate
+echo "Initializing Kwola"
 kwola_init $KWOLAURL local_kwola_config
 rm local_kwola_config.json
 
