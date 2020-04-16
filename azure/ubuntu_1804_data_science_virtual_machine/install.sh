@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 
 
 CUDA_REPO_PKG=cuda-repo-ubuntu1804_10.2.89-1_amd64.deb

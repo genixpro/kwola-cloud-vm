@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 
 echo "Please enter the credentials for your Azure Storage account where Kwola will store its data"
 

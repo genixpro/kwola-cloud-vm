@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 
 
 echo "Please enter the credentials for Google Cloud Storage"

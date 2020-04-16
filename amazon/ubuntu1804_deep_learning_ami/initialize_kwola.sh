@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 
 
 echo "Please enter the credentials for your Amazon S3 account where Kwola will store its data"
