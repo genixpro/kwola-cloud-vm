@@ -66,9 +66,15 @@ sudo systemctl daemon-reload
 
 
 echo "Installing the SSH Banner for the Server"
-sudo cp ssh_banner.txt /etc/banner
-sudo su -c 'echo "Banner /etc/banner" >> /etc/ssh/sshd_config'
+sudo cp ssh_banner.txt /etc/motd
+sudo rm /etc/update-motd.d/00-header
+sudo rm /etc/update-motd.d/05-tfheader
+sudo rm /etc/update-motd.d/10-uname
 sudo systemctl restart sshd
+
+rm ssh_banner.txt
+rm kwola.service
+rm install.sh
 
 echo "The installation of Kwola to this Google Cloud Server is now complete"
 
