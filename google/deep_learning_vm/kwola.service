@@ -6,9 +6,9 @@ StartLimitBurst=5
 
 
 [Service]
-ExecStart=/home/ubuntu/run_kwola.sh
-User=ubuntu
-Group=ubuntu
+ExecStart=/usr/bin/run_kwola
+User=kwola
+Group=kwola
 Restart=on-failure
 RestartSec=5s
 

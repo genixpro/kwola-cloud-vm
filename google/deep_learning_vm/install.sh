@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+START_DIR=`pwd`
+
 
 echo "Installing the NodeJS repository"
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -26,16 +28,21 @@ echo "Downloading and installing Chromedriver"
 wget https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
 sudo cp chromedriver /usr/bin/
-sudo chmod 644 /usr/bin/chromedriver
+sudo chmod +rw,+r,+r /usr/bin/chromedriver
 sudo chmod +x /usr/bin/chromedriver
 rm -rf chromedriver
 rm -rf chromedriver_linux64.zip
 
+echo "Creating a user for Kwola"
+sudo useradd -s /bin/bash --home-dir /home/kwola kwola
+sudo mkdir /home/kwola
+sudo chown -R kwola:kwola /home/kwola
 
 echo "Creating the python virtual environment using the newly compiled Python version"
-python3.8 -m venv venv
-source venv/bin/activate
-pip3 install kwola --upgrade --no-cache
+sudo mkdir /opt/kwola
+cd /opt/kwola
+sudo python3.8 -m venv venv
+sudo su -c "source venv/bin/activate; pip3 install kwola --upgrade --no-cache"
 
 
 echo "Installing babel and the kwola babel plugin globally using npm"
@@ -45,36 +52,45 @@ sudo npm install babel-plugin-kwola -g
 
 
 echo "Installing a copy of the babel plugin locally as well"
-npm install babel-plugin-kwola
-rm -rf package-lock.json
+sudo npm install babel-plugin-kwola
+sudo rm -rf package-lock.json
 
 
 echo "Make the primary kwola scripts executable"
-chmod +x run_kwola.sh
-chmod +x initialize_kwola.sh
+sudo cp $START_DIR/run_kwola.sh /usr/bin/run_kwola
+sudo cp $START_DIR/initialize_kwola.sh /usr/bin/initialize_kwola
+sudo chmod +x /usr/bin/run_kwola
+sudo chmod +x /usr/bin/initialize_kwola
 
 
 echo "Creating the directory that we will mount google storage too"
-mkdir kwola_gcs_mount
+sudo mkdir kwola_gcs_mount
 
 
 echo "Creating a system service for kwola and enabling it so that it runs on boot"
-sudo cp kwola.service /etc/systemd/system/kwola.service
+sudo cp $START_DIR/kwola.service /etc/systemd/system/kwola.service
 sudo systemctl daemon-reload
 sudo systemctl enable kwola
 sudo systemctl daemon-reload
 
 
 echo "Installing the SSH Banner for the Server"
-sudo cp ssh_banner.txt /etc/motd
-sudo rm /etc/update-motd.d/00-header
-sudo rm /etc/update-motd.d/05-tfheader
-sudo rm /etc/update-motd.d/10-uname
+sudo cp $START_DIR/ssh_banner.txt /etc/motd
+sudo rm /etc/update-motd.d/*
 sudo systemctl restart sshd
 
-rm ssh_banner.txt
-rm kwola.service
-rm install.sh
+sudo cp $START_DIR/local_kwola_config.json /opt/kwola/
+
+echo "Setting all files in /opt/kwola to have the owner 'kwola'. "
+sudo chown kwola:kwola -R /opt/kwola
+
+echo "Cleaning up the installation files"
+rm $START_DIR/ssh_banner.txt
+rm $START_DIR/kwola.service
+rm $START_DIR/install.sh
+rm $START_DIR/initialize_kwola.sh
+rm $START_DIR/run_kwola.sh
+rm $START_DIR/local_kwola_config.json
 
 echo "The installation of Kwola to this Google Cloud Server is now complete"
 

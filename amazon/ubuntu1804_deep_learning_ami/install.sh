@@ -50,7 +50,6 @@ sudo systemctl daemon-reload
 
 
 echo "Installing the SSH Banner for the Server"
-sudo cp ssh_banner.txt /etc/banner
-sudo su -c 'echo "Banner /etc/banner" >> /etc/ssh/sshd_config'
+sudo cp ssh_banner.txt /etc/motd
 sudo systemctl restart sshd
 

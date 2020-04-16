@@ -35,6 +35,6 @@
 
 Welcome to Kwola! To initialize your Kwola instance, please run the following command:
 
-$ ./initialize_kwola.sh
+$ initialize_kwola
 
 We hope you enjoy using Kwola!
