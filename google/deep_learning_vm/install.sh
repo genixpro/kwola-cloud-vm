@@ -5,7 +5,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 sudo apt update -y
 
-sudo apt install ffmpeg chromium nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev -y
+sudo apt install ffmpeg chromium nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev python3-venv -y
 
 wget https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip

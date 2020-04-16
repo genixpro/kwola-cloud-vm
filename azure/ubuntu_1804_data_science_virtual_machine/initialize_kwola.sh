@@ -32,6 +32,7 @@ cp ../local_kwola_config.json .
 cp -r ../node_modules .
 source ../venv/bin/activate
 kwola_init $KWOLAURL local_kwola_config
+rm local_kwola_config.json
 
 
 sudo systemctl restart kwola
