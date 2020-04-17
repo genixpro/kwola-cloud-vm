@@ -72,6 +72,7 @@ sudo cp $START_DIR/ssh_banner.txt /etc/motd
 sudo rm /etc/update-motd.d/*
 sudo systemctl restart sshd
 
+echo "Installing the local kwola configuration file"
 sudo cp $START_DIR/local_kwola_config.json $KWOLA_INSTALL_DIR/
 
 echo "Setting all files in $KWOLA_INSTALL_DIR to have the owner 'kwola'. "
