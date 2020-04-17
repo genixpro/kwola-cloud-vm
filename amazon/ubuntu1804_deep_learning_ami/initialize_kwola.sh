@@ -27,7 +27,11 @@ echo "Copying files into the S3 bucket"
 cp ../local_kwola_config.json .
 cp -r ../node_modules .
 source ../venv/bin/activate
+
 echo "Initializing Kwola"
+pip3 install kwola --upgrade --no-cache
+pip3 install kwola --upgrade --no-cache
+pip3 install kwola --upgrade --no-cache
 kwola_init $KWOLAURL local_kwola_config
 rm local_kwola_config.json
 

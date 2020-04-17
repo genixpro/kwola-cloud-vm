@@ -29,6 +29,7 @@ sudo su kwola -c "cp -r node_modules kwola_gcs_mount/"
 
 echo "Initializing Kwola"
 sudo su kwola -c "cp local_kwola_config.json kwola_gcs_mount/"
+sudo su kwola -c "source venv/bin/activate; pip3 install kwola --upgrade --no-cache; pip3 install kwola --upgrade --no-cache; pip3 install kwola --upgrade --no-cache;"
 sudo su kwola -c "source venv/bin/activate;kwola_init $KWOLAURL local_kwola_config"
 sudo su kwola -c "rm kwola_gcs_mount/local_kwola_config.json"
 

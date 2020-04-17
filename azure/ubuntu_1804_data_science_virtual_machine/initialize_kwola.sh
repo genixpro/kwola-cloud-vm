@@ -40,6 +40,7 @@ sudo su kwola -c "cp -r $KWOLA_INSTALL_DIR/node_modules $KWOLA_INSTALL_DIR/kwola
 
 echo "Initializing Kwola"
 cd $KWOLA_INSTALL_DIR/kwola_storage_mount
+sudo su kwola -c "source $KWOLA_INSTALL_DIR/venv/bin/activate; pip3 install kwola --upgrade --no-cache; pip3 install kwola --upgrade --no-cache; pip3 install kwola --upgrade --no-cache;"
 sudo su kwola -c "source $KWOLA_INSTALL_DIR/venv/bin/activate; kwola_init $KWOLAURL local_kwola_config"
 
 echo "Cleaning up"
