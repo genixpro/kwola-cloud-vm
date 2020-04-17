@@ -2,6 +2,10 @@
 
 echo "Please enter the credentials for your Azure Storage account where Kwola will store its data"
 
+KWOLA_INSTALL_DIR="/opt/kwola"
+
+cd $KWOLA_INSTALL_DIR
+
 echo "Please enter your Azure Storage Account Name:"
 read ACCOUNT_NAME
 
@@ -13,31 +17,38 @@ read CONTAINER_NAME
 
 echo "accountName $ACCOUNT_NAME
 accountKey $ACCESS_KEY
-containerName $CONTAINER_NAME" > fuse_connection.cfg
-chmod 600 fuse_connection.cfg
+containerName $CONTAINER_NAME" | sudo su kwola -c "tee $KWOLA_INSTALL_DIR/fuse_connection.cfg"
+sudo chmod 600 $KWOLA_INSTALL_DIR/fuse_connection.cfg
 
-echo "CONTAINER_NAME" > .container-name
+echo "$CONTAINER_NAME" | sudo su kwola -c "tee $KWOLA_INSTALL_DIR/.container-name"
 
 
 echo "Please enter the URL that you would like Kwola to start testing. Include http:// and everything in the URL."
 read KWOLAURL
 
-mkdir blobfusetmp
-
-mkdir kwola_storage_mount
-sudo blobfuse kwola_storage_mount --tmp-path=/home/ubuntu/blobfusetmp  --config-file=fuse_connection.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 -o allow_other
+sudo umount $KWOLA_INSTALL_DIR/kwola_storage_mount
+sudo rm -rf $KWOLA_INSTALL_DIR/kwola_storage_mount
+sudo rm -rf $KWOLA_INSTALL_DIR/blobfusetmp
+sudo su kwola -c "mkdir $KWOLA_INSTALL_DIR/blobfusetmp"
+sudo su kwola -c "mkdir $KWOLA_INSTALL_DIR/kwola_storage_mount"
+sudo blobfuse $KWOLA_INSTALL_DIR/kwola_storage_mount --tmp-path=$KWOLA_INSTALL_DIR/blobfusetmp  --config-file=fuse_connection.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 -o allow_other
 sleep 3
-cd kwola_storage_mount
+
 echo "Copying files to blob storage"
-cp ../local_kwola_config.json .
-cp -r ../node_modules .
-source ../venv/bin/activate
+sudo su kwola -c "cp $KWOLA_INSTALL_DIR/local_kwola_config.json $KWOLA_INSTALL_DIR/kwola_storage_mount"
+sudo su kwola -c "cp -r $KWOLA_INSTALL_DIR/node_modules $KWOLA_INSTALL_DIR/kwola_storage_mount"
+
 echo "Initializing Kwola"
-kwola_init $KWOLAURL local_kwola_config
-rm local_kwola_config.json
+cd $KWOLA_INSTALL_DIR/kwola_storage_mount
+sudo su kwola -c "source $KWOLA_INSTALL_DIR/venv/bin/activate; kwola_init $KWOLAURL local_kwola_config"
+
+echo "Cleaning up"
+sudo su kwola -c "rm $KWOLA_INSTALL_DIR/kwola_storage_mount/local_kwola_config.json"
 
 
+echo "Restarting the Kwola system service"
 sudo systemctl restart kwola
 
 echo "You have completed initializing Kwola. Kwola will now start running."
-echo "Kwola will now start storing its results in the Azure Storage bucket that you provided."
+echo "Kwola will store its results in the Azure Storage bucket that you provided."
+echo "Please look there in the bugs folder to find data on the bugs that Kwola finds."

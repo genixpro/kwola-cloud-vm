@@ -36,3 +36,4 @@ sudo systemctl restart kwola
 
 echo "You have completed initializing Kwola. Kwola will now start running."
 echo "Kwola will now start storing its results in the gcs bucket that you provided."
+-

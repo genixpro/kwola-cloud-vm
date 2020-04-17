@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
+KWOLA_INSTALL_DIR="/opt/kwola"
 
-cd /home/ubuntu
-
-sudo blobfuse kwola_storage_mount --tmp-path=/home/ubuntu/blobfusetmp  --config-file=fuse_connection.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120
-
-source venv/bin/activate
-cd kwola_storage_mount
+sudo blobfuse $KWOLA_INSTALL_DIR/kwola_storage_mount --tmp-path=$KWOLA_INSTALL_DIR/blobfusetmp  --config-file=$KWOLA_INSTALL_DIR/fuse_connection.cfg -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120
+source $KWOLA_INSTALL_DIR/venv/bin/activate
+cd $KWOLA_INSTALL_DIR/kwola_storage_mount
 kwola
