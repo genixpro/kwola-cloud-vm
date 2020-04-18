@@ -26,6 +26,11 @@ sleep 3
 echo "Copying files to GCS storage"
 sudo su kwola -c "cp -r node_modules kwola_gcs_mount/"
 
+echo "Generating the TLS/SSL MITM Proxy Certificate"
+sudo su kwola -c "source venv/bin/activate; kwola_install_proxy_cert 1"
+
+echo "Installing the mitm proxy certificate into the Chrome registry"
+sudo su kwola -c "certutil -d sql:/home/kwola/.pki/nssdb -A -n 'mitm.it cert authority' -i ~/.mitmproxy/mitmproxy-ca-cert.cer -t TCP,TCP,TCP"
 
 echo "Initializing Kwola"
 sudo su kwola -c "cp local_kwola_config.json kwola_gcs_mount/"

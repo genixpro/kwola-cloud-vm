@@ -17,7 +17,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 echo "Installing System Dependencies"
 sudo apt update -y
-sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg cuda-drivers cuda libssl-dev blobfuse python3-venv -y
+sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg cuda-drivers cuda libssl-dev blobfuse python3-venv libnss3-tools -y
 
 echo "Downloading and installing chromedriver"
 wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip

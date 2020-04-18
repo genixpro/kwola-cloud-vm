@@ -9,7 +9,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 echo "Installing general system packages"
 sudo apt update -y
-sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev python3-venv -y
+sudo apt install ffmpeg chromium-browser nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev python3-venv libnss3-tools -y
 
 
 echo "Downloading and installing Chromedriver"

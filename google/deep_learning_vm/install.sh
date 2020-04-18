@@ -9,8 +9,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 echo "Installing general system packages"
 sudo apt update -y
-sudo apt install ffmpeg chromium nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev libffi-dev curl libsqlite3-dev -y
-
+sudo apt install ffmpeg chromium nodejs build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse fuse-dbg libssl-dev zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev libffi-dev curl libsqlite3-dev libnss3-tools -y
 
 echo "Compiling Python version 3.8.2 The system by default has Python 3.5 which does not work for Kwola"
 curl -O https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.xz
